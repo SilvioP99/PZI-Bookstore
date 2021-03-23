@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
@@ -65,14 +66,19 @@ section {
 }
 
 body {
-  margin: 0;
+   margin: 0;
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
   color: #212529;
   text-align: left;
-  background-color: #f8fafc;
+  background-image: url(
+    https://images.squarespace-cdn.com/content/v1/512f4c78e4b0c046ed7bd80e/1568736453277-3138DQJKXBLQZELWP0GP/ke17ZwdGBToddI8pDm48kMqy_fIJhjD96h2g1Yc754UUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYy7Mythp_T-mtop-vrsUOmeInPi9iDjx9w8K4ZfjXt2dsT20xjuq3Z6r4W193_Devl6Dq2mBWT-xEWopzy7H5LGbSexTd1-frD7527z4SM9QQ/group.jpg?format=1500w
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -391,7 +397,9 @@ h6,
 h1,
 .h1 {
   font-size: 2.25rem;
+  background-color: rgba(0, 0, 0, 0.39)
 }
+
 
 h2,
 .h2 {
@@ -575,6 +583,8 @@ pre code {
 
 .container,
 .container-fluid,
+.container-custom,
+.container-about,
 .container-xl,
 .container-lg,
 .container-md,
@@ -584,6 +594,20 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+
+@media (min-width: 1500px) {
+  .container-custom,
+  .container {
+    max-width: 1500px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-about,
+  .container {
+    max-width: 1200px;
+  }
 }
 
 @media (min-width: 576px) {
@@ -1796,12 +1820,13 @@ pre code {
 }
 
 .table-bordered {
-  border: 1px solid #dee2e6;
+  border: 1px solid #074c92;
+  width: 1000px;
 }
 
 .table-bordered th,
 .table-bordered td {
-  border: 1px solid #dee2e6;
+  border: 1px solid #007ffd;
 }
 
 .table-bordered thead th,
@@ -2150,9 +2175,9 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #a1cbef;
+  border-color: #00000094;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(7, 253, 130, 0);
 }
 
 .form-control::-moz-placeholder {
@@ -2618,6 +2643,7 @@ textarea.form-control.is-invalid {
 
 .btn {
   display: inline-block;
+  height: calc(1.6em + 0.75rem + 2px);
   font-weight: 400;
   color: #212529;
   text-align: center;
@@ -2668,14 +2694,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #3490dc;
-  border-color: #3490dc;
+  background-color: #00ffbfab;
+  border-color: #00ffbfab;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #227dc7;
-  border-color: #2176bd;
+  background-color: #00ffbf;
+  border-color: #00ffbf;
 }
 
 .btn-primary:focus,
@@ -6859,6 +6885,7 @@ a.close.disabled {
   padding-bottom: 20px;
   color: #fff;
   text-align: center;
+  top: 46%;
 }
 
 @-webkit-keyframes spinner-border {
@@ -10922,4 +10949,192 @@ a.text-dark:focus {
 .top-right-user {
   position: absolute;
   right: 10px;
+}
+
+/* Sve do floating je iz tutorijala*/
+
+/*HERO SECTION*/
+section.hero {
+  height: 490px;
+  background: #3d3d3d url(mc-mickey1.jpg) center center no-repeat;
+  background-size: cover;
+}
+
+.hero h2 {
+  color: white;
+}
+
+/*product card*/
+
+.item-wrapper {
+  padding: 20px;
+  border: 2px solid #efefef;
+  border-radius: 7px;
+  margin-top: 40px;
+  background-color: rgba(243, 248, 253, 0.842);
+}
+
+
+.item-wrapper:hover .img-wrapper .add-to-cart {
+  bottom: 0;
+}
+
+.img-wrapper {
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-wrapper .add-to-cart {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  background-color: #333;
+  padding: 16px 8px;
+  bottom: -50px;
+  position: absolute;
+  z-index: 2;
+  color: #fff;
+  margin: 0 auto;
+  border: none;
+  box-shadow: none;
+}
+
+.img-wrapper .add-to-cart:hover {
+  background-color: #008cba;
+}
+
+.img-wrapper img {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  /*-webkit-filter: grayscale(1);*/
+}
+
+h3 {
+  font-size: 22px;
+}
+
+h5 {
+  font-weight: bold;
+}
+
+p {
+  color: rgb(59, 58, 58);
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+/*Footer*/
+
+.full-width {
+  max-width: 1400px;
+}
+
+.footer {
+  background-color: #3c4d58;
+  padding: 2rem 4rem;
+  text-align: center;
+  color: #fff;
+}
+
+.footer i {
+  font-size: 100px;
+}
+
+.footer h4 {
+  color: #fff;
+  font-size: 1em;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-top: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.footer p, .footer a {
+  font-weight: 300;
+  font-size: .8em;
+  color: #fff;
+}
+
+@media only screen and (min-width: 40.063em) {
+  .footer .columns:nth-child(n+2) {
+      border-left: 1px solid #b3b3b3;
+      min-height: 280px;
+  }
+}
+
+.footer-links {
+  list-style-type: none;
+}
+
+.footer-links li {
+  margin-top: .5em;
+}
+
+.price-tag {
+  font-size: 46px;
+  color: rgba(53, 105, 28, 0.77);
+}
+
+.brand-title {
+  font-size: 30px;
+  padding-top: 10px;
+}
+
+.floating{
+  right:1%;
+  bottom:1%;
+  position:fixed;
+} /*Ovdje završava tutorial*/
+
+
+.myImg{
+  height: 200px;
+  border-radius: 25px;
+}
+
+.h9000{
+  font-size: 30px;
+  text-align: center;
+  background-color:#21252900;
+  text-decoration: underline;
+}
+
+.myIcon{
+  height: 150px;
+}
+html, body {
+  height: 100%;
+}
+.wrapper {
+  min-height: 40%;
+  height: 40%;}
+.footer, .push {
+  height: 155px; /* .push must be the same height as .footer */
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.item-wrap {
+  padding: 20px;
+  border: 2px solid #efefef00;
+  border-radius: 7px;
+  margin-top: 20px;
+  background-color: rgba(221, 236, 233, 0.959);
+}
+
+.container-special{
+  width: 1200px;
+  background-color: #dffcf5ec;
+  padding: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.details{
+  font-size: 20px;
 }

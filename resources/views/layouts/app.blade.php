@@ -7,72 +7,158 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Bookstore') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-            $("#addUserBtn").on("click", function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('users.add') }}',
-                    data: $('#addUsersForm').serialize()
-                })
-            })
-        </script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
+    <script type="text/javascript">
+    $(document).ready(function (e){
+        $("#addBtn").on("click", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type : 'POST',
+                url : '{{ route('users.store') }}',
+                data : $('#addForm').serialize(),
+                success: function (data){
+                    location.reload();
+                },
+                error : function (data) {
+                    /* Ako je nastala greška prikaži ih */
+                    let json = data.responseJSON;
+                    $("input").removeClass("is-invalid");
+                    $(".invalid-feedback").remove();
+                    for (var key in json["errors"]){
+                        $("#" + key).addClass("is-invalid")
+                        $("#" + key).after("<span class='invalid-feedback' role='alert'><strong>"+json["errors"][key]+"</strong></span>")   
+                    }
+                    console.log(json);
+                }
+            });
+        });
+    });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function (e){
+        $("#addbooksBtn").on("click", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type : 'POST',
+                url : '{{ route('addbooks.store') }}',
+                data : $('#addbooksForm').serialize(),
+                success: function (data){
+                    location.reload();
+                },
+                error : function (data) {
+                    /* Ako je nastala greška prikaži ih */
+                    let json = data.responseJSON;
+                    $("input").removeClass("is-invalid");
+                    $(".invalid-feedback").remove();
+                    for (var key in json["errors"]){
+                        $("#" + key).addClass("is-invalid")
+                        $("#" + key).after("<span class='invalid-feedback' role='alert'><strong>"+json["errors"][key]+"</strong></span>")   
+                    }
+                    console.log(json);
+                }
+            });
+        });
+    });
+    </script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-     <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="{{ asset('sass/app.scss') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div id="app">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
-                <div class="nav-item">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Bookstore') }}
+                    {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
 
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" type="get" action=" {{ url('/finder') }}">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="query"placeholder="Pretražite knjige"  style="width: 800px">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary" style="border-radius: 0px 0.25rem 0.25rem 0px">  
+                                    <span class="search">Pretraži</span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                    
                     <!-- Right Side Of Navbar -->
-                    <ul class="links top-right">
+                    <ul class="navbar-nav ml-auto">
+                    
                         <!-- Authentication Links -->
+                        <li class="nav-item">
+                    <a class="nav-link" href="{{route('Books')}}">
+                        Knjige
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i></a>
+                </li>
                         @guest
-                            <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
                             @endif
                         @else
-                            <div class="links top-right-user">
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->name. " " . Auth::user()->surname }}
                                 </a>
+                                
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                   <a class="dropdown-item" href="{{ route('ui') }}">
-                                        {{ __('User interface') }}
+                                <a class="dropdown-item" href="{{ route('account', Auth::user()->id) }}">
+                                        {{ __('Moj račun') }}
                                     </a>
+                                @superAdministrator
+                                    <a class="dropdown-item" href="{{ route('users') }}">
+                                        {{ __('Korisnici') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('addbooks') }}">
+                                        {{ __('Dodavanje knjiga') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('orders') }}">
+                                        {{ __('Narudžbe') }}
+                                    </a>
+                                    @endsuperAdministrator
+                                    @administrator
+                                    <a class="dropdown-item" href="{{ route('addbooks') }}">
+                                        {{ __('Dodavanje knjiga') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('orders') }}">
+                                        {{ __('Narudžbe') }}
+                                    </a>
+                                    @endadministrator
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -83,10 +169,34 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
+    </div><br>
+    
+    <main>
             @yield('content')
-        </main>       
+    </main><div class="wrapper">
     </div>
+
+<!-- Footer -->
+
+<footer class="bg-dark text-center text-white"style="bottom: 0px">
+  <div class="container p-1">
+    <section class="mb-1">
+      <a class="btn btn-outline-light btn-floating m-1" href="https://drive.google.com/file/d/1hKYFvV9aNhiJ7Xdkxov8dsOkGH2cHD7D/view?usp=sharing" role="button"
+        >Vizija</a>
+      <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/g4book/PZI-Bookstore" role="button"
+        >Github</a>
+      <a class="btn btn-outline-light btn-floating m-1" href="about" role="button"
+        >O nama</a>
+    </section>
+    </div>
+  
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: Dario Dominković & Silvio Pejić
+  </div>
+  
+</footer></div>
+<!-- Footer -->
+
+
 </body>
 </html>
